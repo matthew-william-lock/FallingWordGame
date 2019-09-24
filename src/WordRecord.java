@@ -1,5 +1,3 @@
-package skeletonCodeAssgnmt2;
-
 public class WordRecord {
 	private String text;
 	private  int x;
@@ -8,8 +6,8 @@ public class WordRecord {
 	private boolean dropped;
 	
 	private int fallingSpeed;
-	private static int maxWait=1500;
-	private static int minWait=100;
+	private static int maxWait=10;
+	private static int minWait=1;
 
 	public static WordDictionary dict;
 	
@@ -81,7 +79,7 @@ public class WordRecord {
 		text=dict.getNewWord();
 		dropped=false;
 		fallingSpeed=(int)(Math.random() * (maxWait-minWait)+minWait); 
-		//System.out.println(getWord() + " falling speed = " + getSpeed());
+		System.out.println(getWord() + " falling speed = " + getSpeed());
 
 	}
 	

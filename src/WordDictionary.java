@@ -1,5 +1,3 @@
-package skeletonCodeAssgnmt2;
-
 public class WordDictionary {
 	int size;
 	static String [] theDict= {"litchi","banana","apple","mango","pear","orange","strawberry",

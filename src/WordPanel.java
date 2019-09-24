@@ -1,5 +1,3 @@
-package skeletonCodeAssgnmt2;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Font;
@@ -30,8 +28,11 @@ public class WordPanel extends JPanel implements Runnable {
 		   //animation must be added 
 		    for (int i=0;i<noWords;i++){	    	
 		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());	
-		    	g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words	
-		    }
+				g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words	
+				//System.out.println(words[i].getSpeed());
+				words[i].drop(words[i].getSpeed());
+			}
+			
 		   
 		  }
 		
@@ -43,7 +44,15 @@ public class WordPanel extends JPanel implements Runnable {
 		}
 		
 		public void run() {
-			//add in code to animate this
+			while (!done) {
+				//System.out.println("Running");
+				repaint();
+				try {
+					Thread.sleep(100);
+				} catch (Exception e) {
+					System.out.println("Error caught!");
+				}				
+			}
 		}
 
 	}

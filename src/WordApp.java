@@ -1,5 +1,3 @@
-package skeletonCodeAssgnmt2;
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -28,9 +26,7 @@ public class WordApp {
 	static volatile boolean done;  //must be volatile
 	static 	Score score = new Score();
 
-	static WordPanel w;
-	
-	
+	static WordPanel w;	
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
@@ -61,12 +57,13 @@ public class WordApp {
   
 	    final JTextField textEntry = new JTextField("",20);
 	   textEntry.addActionListener(new ActionListener()
-	    {
+	    {                  
 	      public void actionPerformed(ActionEvent evt) {
 	          String text = textEntry.getText();
 	          //[snip]
 	          textEntry.setText("");
-	          textEntry.requestFocus();
+			  textEntry.requestFocus();
+			  System.out.println(text); //Testing
 	      }
 	    });
 	   
@@ -150,14 +147,18 @@ public static String[] getDictFromFile(String filename) {
 		//[snip]
 		
 		setupGUI(frameX, frameY, yLimit);  
-    	//Start WordPanel thread - for redrawing animation
-
+		
 		int x_inc=(int)frameX/noWords;
-	  	//initialize shared array of current words
+		  //initialize shared array of current words
 
 		for (int i=0;i<noWords;i++) {
 			words[i]=new WordRecord(dict.getNewWord(),i*x_inc,yLimit);
+			System.out.println(i+" "+words[i].getWord()+" "+words[i].getSpeed());
 		}
+
+		//Start WordPanel thread - for redrawing animation
+		Thread wordPanelThread = new Thread(w);
+		wordPanelThread.run();
 
 
 	}
