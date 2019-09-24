@@ -27,6 +27,10 @@ public class WordApp {
 	static 	Score score = new Score();
 
 	static WordPanel w;	
+
+	//Jlabels
+	static JLabel missed;
+	static JLabel scr;
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
@@ -47,8 +51,8 @@ public class WordApp {
 	    JPanel txt = new JPanel();
 	    txt.setLayout(new BoxLayout(txt, BoxLayout.LINE_AXIS)); 
 	    JLabel caught =new JLabel("Caught: " + score.getCaught() + "    ");
-	    JLabel missed =new JLabel("Missed:" + score.getMissed()+ "    ");
-	    JLabel scr =new JLabel("Score:" + score.getScore()+ "    ");    
+	    missed =new JLabel("Missed:" + score.getMissed()+ "    ");
+	    scr =new JLabel("Score:" + score.getScore()+ "    ");    
 	    txt.add(caught);
 	    txt.add(missed);
 	    txt.add(scr);
@@ -80,8 +84,10 @@ public class WordApp {
 		    {
 		      public void actionPerformed(ActionEvent e)
 		      {
-		    	  //[snip]
-		    	  textEntry.requestFocus();  //return focus to the text entry field
+				//Start GameThread 
+				Thread gameThread = new Thread(new GameThread(words,w,score,totalWords));
+				gameThread.start(); 			
+				textEntry.requestFocus();  //return focus to the text entry field
 		      }
 		    });
 		JButton endB = new JButton("End");;
@@ -158,7 +164,12 @@ public static String[] getDictFromFile(String filename) {
 
 		//Start WordPanel thread - for redrawing animation
 		Thread wordPanelThread = new Thread(w);
-		wordPanelThread.run();
+		wordPanelThread.start();
+
+		//Start dropped thread
+		DroppedThread dThread = new DroppedThread(words,w,score,missed);
+		Thread droppedThread = new Thread(dThread);
+		droppedThread.start();
 
 
 	}

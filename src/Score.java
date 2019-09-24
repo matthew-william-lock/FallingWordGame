@@ -27,7 +27,7 @@ public class Score {
 		return gameScore;
 	}
 	
-	public void missedWord() {
+	public synchronized void missedWord() {
 		missedWords++;
 	}
 

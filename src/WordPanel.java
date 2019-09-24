@@ -30,7 +30,7 @@ public class WordPanel extends JPanel implements Runnable {
 		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());	
 				g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words	
 				//System.out.println(words[i].getSpeed());
-				words[i].drop(words[i].getSpeed());
+				//words[i].drop(words[i].getSpeed());
 			}
 			
 		   

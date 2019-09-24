@@ -14,7 +14,7 @@ ${BINDIR}/%.class: ${SRCDIR}/%.java
 	javac $< -cp ${BINDIR} -d ${BINDIR} 
 
 # first build rule
-${BINDIR}/WordApp.class: ${BINDIR}/Score.class  ${BINDIR}/WordDictionary.class ${BINDIR}/WordRecord.class ${BINDIR}/WordPanel.class ${BINDIR}/AnimateThread.class ${SRCDIR}/WordApp.java
+${BINDIR}/WordApp.class: ${BINDIR}/Score.class  ${BINDIR}/WordDictionary.class ${BINDIR}/WordRecord.class ${BINDIR}/WordPanel.class ${BINDIR}/DroppedThread.class ${BINDIR}/GameThread.class ${SRCDIR}/WordApp.java
 
 run:
 	java -cp bin/ UnthreadedSimulation 0 0 0
