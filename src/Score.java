@@ -17,10 +17,6 @@ public class Score {
 		return gameOver;
 	}
 	
-	public int getMissed() {
-		return missedWords;
-	}
-
 	public synchronized int getCaught() {
 		return caughtWords;
 	}
@@ -31,6 +27,9 @@ public class Score {
 
 	public synchronized int getScore() {
 		return gameScore;
+	}
+	public synchronized int getMissed() {
+		return missedWords;
 	}
 	
 	public synchronized void missedWord() {

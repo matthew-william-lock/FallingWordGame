@@ -21,8 +21,8 @@ public class GameThread implements Runnable{
                 //System.out.println("Total: " + score.getTotal()+" "+totalWords); //Testing
                     
                 for (int i=0;i<noWords;i++){	    	
-                    //words[i].drop(words[i].getSpeed());
-                    words[i].drop(3); //Testing
+                    words[i].drop(words[i].getSpeed());
+                    //words[i].drop(3); //Testing
                 }                
                 
                 try {

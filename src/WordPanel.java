@@ -40,8 +40,16 @@ public class WordPanel extends JPanel implements Runnable {
 			}			   
 		   }
 		   else if (score.getGameStatus()){
-			g.drawString("GAME OVER",0,20);
-			g.drawString("score : "+score.getScore(),0,40);
+			if(score.getMissed()==0){
+				g.drawString("WINNER!",450,250);
+				g.drawString("score : "+score.getScore(),450,270);
+
+			}
+			else{
+				g.drawString("GAME OVER",450,250);
+				g.drawString("score : "+score.getScore(),450,270);
+			}
+			
 		   }		
 		   
 		  }
