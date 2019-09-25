@@ -2,20 +2,26 @@ public class Score {
 	private int missedWords;
 	private int caughtWords;
 	private int gameScore;
+	public static volatile boolean gameOver; 
 	
 	Score() {
 		missedWords=0;
 		caughtWords=0;
 		gameScore=0;
+		gameOver=false;
 	}
 		
 	// all getters and setters must be synchronized
+
+	public synchronized boolean getGameStatus() {
+		return gameOver;
+	}
 	
 	public int getMissed() {
 		return missedWords;
 	}
 
-	public int getCaught() {
+	public synchronized int getCaught() {
 		return caughtWords;
 	}
 	
@@ -23,7 +29,7 @@ public class Score {
 		return (missedWords+caughtWords);
 	}
 
-	public int getScore() {
+	public synchronized int getScore() {
 		return gameScore;
 	}
 	
@@ -31,14 +37,19 @@ public class Score {
 		missedWords++;
 	}
 
-	public void caughtWord(int length) {
+	public synchronized void caughtWord(int length) {
 		caughtWords++;
 		gameScore+=length;
 	}
 
-	public void resetScore() {
+	public synchronized void resetScore() {
 		caughtWords=0;
 		missedWords=0;
 		gameScore=0;
+		gameOver=false;
+	}
+
+	public synchronized void setGameStatus(boolean bool) {
+		gameOver=bool;
 	}
 }

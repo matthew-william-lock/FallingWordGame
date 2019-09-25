@@ -13,6 +13,7 @@ public class WordPanel extends JPanel implements Runnable {
 		private WordRecord[] words;
 		private int noWords;
 		private int maxY;
+		private Score score;
 
 		
 		public void paintComponent(Graphics g) {
@@ -26,33 +27,46 @@ public class WordPanel extends JPanel implements Runnable {
 		    g.setFont(new Font("Helvetica", Font.PLAIN, 26));
 		   //draw the words
 		   //animation must be added 
-		    for (int i=0;i<noWords;i++){	    	
+			if (WordApp.done && !score.getGameStatus()){
+				g.drawString("",0,0);
+			}
+
+		   else if (!score.getGameStatus()&&!WordApp.done) {
+			for (int i=0;i<noWords;i++){	    	
 		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());	
 				g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words	
 				//System.out.println(words[i].getSpeed());
 				//words[i].drop(words[i].getSpeed());
-			}
-			
+			}			   
+		   }
+		   else if (score.getGameStatus()){
+			g.drawString("GAME OVER",0,20);
+			g.drawString("score : "+score.getScore(),0,40);
+		   }		
 		   
 		  }
 		
-		WordPanel(WordRecord[] words, int maxY) {
+		WordPanel(WordRecord[] words, int maxY, Score score) {
 			this.words=words; //will this work?
 			noWords = words.length;
 			done=false;
-			this.maxY=maxY;		
+			this.maxY=maxY;	
+			this.score = score;	
 		}
 		
 		public void run() {
-			while (!done) {
-				//System.out.println("Running");
-				repaint();
-				try {
-					Thread.sleep(100);
-				} catch (Exception e) {
-					System.out.println("Error caught!");
-				}				
+			while (true){
+				while (!done) {
+					//System.out.println("Running");
+					repaint();
+					try {
+						Thread.sleep(10);
+					} catch (Exception e) {
+						System.out.println("Error caught!");
+					}				
+				}
 			}
+			
 		}
 
 	}

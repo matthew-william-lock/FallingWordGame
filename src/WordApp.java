@@ -43,7 +43,7 @@ public class WordApp {
       	g.setSize(frameX,frameY);
  
     	
-		w = new WordPanel(words,yLimit);
+		w = new WordPanel(words,yLimit,score);
 		w.setSize(frameX,yLimit+100);
 	    g.add(w);
 	    
@@ -68,6 +68,20 @@ public class WordApp {
 	          textEntry.setText("");
 			  textEntry.requestFocus();
 			  System.out.println(text); //Testing
+
+			  for (int i=0;i<noWords;i++){	    	
+				if (text.equals(words[i].getWord())){
+					score.caughtWord(words[i].getWord().length());
+					caught.setText("Caught: " + score.getCaught() + "    ");
+					scr.setText("Score:" + score.getScore()+ "    "); 
+					if ((totalWords - score.getTotal()-noWords) > -1) words[i].resetWord(); 
+					else {
+						words[i].resetWord();
+						words[i].setWord("");
+						words[i].setSpeed(0);
+					}
+				}
+			}
 	      }
 	    });
 	   
@@ -85,8 +99,24 @@ public class WordApp {
 		      public void actionPerformed(ActionEvent e)
 		      {
 				//Start GameThread 
-				Thread gameThread = new Thread(new GameThread(words,w,score,totalWords));
-				gameThread.start(); 			
+				
+				
+				//System.out.println("press");
+				//System.out.println(done);
+
+				if(done==true){
+					caught.setText("Caught: " + score.getCaught() + "    ");
+					scr.setText("Score:" + score.getScore()+ "    "); 
+					for (int i=0;i<noWords;i++){	    	
+						words[i].resetWord();
+					}
+					score.resetScore();
+					missed.setText("Missed:" + score.getMissed()+ "    ");
+					caught.setText("Caught: " + score.getCaught() + "    ");
+					scr.setText("Score:" + score.getScore()+ "    "); 
+					done=false;
+				}
+
 				textEntry.requestFocus();  //return focus to the text entry field
 		      }
 		    });
@@ -97,12 +127,33 @@ public class WordApp {
 			    {
 			      public void actionPerformed(ActionEvent e)
 			      {
-			    	  //[snip]
+					  //[snip]
+					score.resetScore();
+					missed.setText("Missed:" + score.getMissed()+ "    ");
+					caught.setText("Caught: " + score.getCaught() + "    ");
+					scr.setText("Score:" + score.getScore()+ "    "); 
+					done=true;	
+
+					  // System.out.println("Press"); //Testing
 			      }
-			    });
+				});
+
+		JButton quitB = new JButton("Quit");;
+			
+				// add the listener to the jbutton to handle the "pressed" event
+				quitB.addActionListener(new ActionListener()
+			    {
+			      public void actionPerformed(ActionEvent e)
+			      {
+					System.exit(0);
+			      }
+				});
+				
+				
 		
 		b.add(startB);
 		b.add(endB);
+		b.add(quitB);
 		
 		g.add(b);
     	
@@ -150,7 +201,7 @@ public static String[] getDictFromFile(String filename) {
 		
 		words = new WordRecord[noWords];  //shared array of current words
 		
-		//[snip]
+		done=true; //Game is started in stopped state
 		
 		setupGUI(frameX, frameY, yLimit);  
 		
@@ -167,9 +218,14 @@ public static String[] getDictFromFile(String filename) {
 		wordPanelThread.start();
 
 		//Start dropped thread
-		DroppedThread dThread = new DroppedThread(words,w,score,missed);
+		DroppedThread dThread = new DroppedThread(words,w,score,missed,totalWords);
 		Thread droppedThread = new Thread(dThread);
 		droppedThread.start();
+
+		//Start GameThread 
+		Thread gameThread = new Thread(new GameThread(words,w,score,totalWords));
+		gameThread.start(); 			
+		
 
 
 	}

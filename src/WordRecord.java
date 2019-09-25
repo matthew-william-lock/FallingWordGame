@@ -46,8 +46,13 @@ public class WordRecord {
 		this.x=x;
 	}
 	
+	
 	public synchronized  void setWord(String text) {
 		this.text=text;
+	}
+
+	public synchronized  void setSpeed(int fallingSpeed) {
+		this.fallingSpeed=fallingSpeed;
 	}
 
 	public synchronized  String getWord() {
